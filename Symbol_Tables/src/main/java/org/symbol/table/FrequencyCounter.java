@@ -3,16 +3,12 @@ package org.symbol.table;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 public class FrequencyCounter {
 
-  public static void main(String[] args) throws FileNotFoundException {
-    if(args.length > 1)
-      System.setIn(new FileInputStream(args[1]));
+  public static void main(String[] args) {
+    System.setIn(FrequencyCounter.class.getClassLoader().getResourceAsStream("tinyTale.txt"));
 
-    int minlen = Integer.parseInt(args[0]);
+    int minlen = Integer.parseInt("1");
     SequentialSearchST<String, Integer> st = new SequentialSearchST<>();
     while (!StdIn.isEmpty()) {
       String word = StdIn.readString();
