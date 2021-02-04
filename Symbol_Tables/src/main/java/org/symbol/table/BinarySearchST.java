@@ -1,7 +1,5 @@
 package org.symbol.table;
 
-import java.util.Iterator;
-
 public class BinarySearchST<Key extends Comparable<Key>, Value> {
   private Key[] keys;
   private Value[] vals;
@@ -80,5 +78,22 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
   public Key ceiling(Key key) {
     int i = rank(key);
     return keys[i];
+  }
+
+  public boolean contains(Key key) {
+    for (int i = 0; i < size(); i++) {
+      if (key.equals(keys[i]))
+          return true;
+    }
+    return false;
+  }
+
+  public String[] keys() {
+    String[] keys = new String[size()];
+
+    for (int i = 0; i < size() ; i++) {
+      keys[i] = this.keys[i].toString();
+    }
+    return keys;
   }
 }
