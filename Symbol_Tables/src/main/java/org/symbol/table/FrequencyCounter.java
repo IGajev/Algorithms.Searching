@@ -6,10 +6,10 @@ import edu.princeton.cs.algs4.StdOut;
 public class FrequencyCounter {
 
   public static void main(String[] args) {
-    System.setIn(FrequencyCounter.class.getClassLoader().getResourceAsStream("leipzig1M.txt"));
+    System.setIn(FrequencyCounter.class.getClassLoader().getResourceAsStream("tinyTale.txt"));
 
-    int minlen = Integer.parseInt("10");
-    BinarySearchST<String, Integer> st = new BinarySearchST<>(1000000);
+    int minlen = Integer.parseInt("2");
+    BinarySearchST<String, Integer> st = new BinarySearchST<>(100);
     while (!StdIn.isEmpty()) {
       String word = StdIn.readString();
       if (word.length() < minlen) {
