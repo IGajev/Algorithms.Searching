@@ -13,7 +13,7 @@ public class Main {
     binarySearchTree.put("H", 8);
     binarySearchTree.put("I", 9);
 
-    System.out.println(binarySearchTree.size());
+    System.out.println("size: " + binarySearchTree.size());
     System.out.println(binarySearchTree.get("A"));
     System.out.println(binarySearchTree.get("B"));
     System.out.println(binarySearchTree.get("C"));
@@ -22,5 +22,24 @@ public class Main {
     System.out.println("min: " + binarySearchTree.min() + " and max:" + binarySearchTree.max());
     System.out.println("floor(E)->" + binarySearchTree.floor("E"));
     System.out.println("ceiling(E)->" + binarySearchTree.ceiling("E"));
+    System.out.println("depth()->" + binarySearchTree.depth());
+
+
+    BST<String, Integer> binarySearchTree2 = new BST<>();
+
+    binarySearchTree2.put("D", 1);
+    binarySearchTree2.put("G", 2);
+    binarySearchTree2.put("C", 3);
+    binarySearchTree2.put("A", 4);
+    binarySearchTree2.put("F", 6);
+    binarySearchTree2.put("B", 7);
+    binarySearchTree2.put("H", 8);
+    binarySearchTree2.put("I", 9);
+
+    System.out.println("size: " + binarySearchTree2.size());
+    System.out.println("min: " + binarySearchTree2.min() + " and max:" + binarySearchTree2.max());
+    System.out.println("floor(E)->" + binarySearchTree2.floor("E"));
+    System.out.println("ceiling(E)->" + binarySearchTree2.ceiling("E"));
+    System.out.println("depth()->" + binarySearchTree2.depth());
   }
 }
