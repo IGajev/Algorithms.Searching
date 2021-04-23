@@ -2,7 +2,11 @@ package org.binary.search.tree;
 
 import edu.princeton.cs.algs4.Queue;
 
-public class BST <Key extends Comparable<Key>, Value> implements Tree<Key, Value> {
+public class RedBlackBST<Key extends Comparable<Key>, Value> implements Tree<Key, Value> {
+
+  private static final boolean RED = true;
+  private static final boolean BLACK = false;
+
   private Node root;
 
   private class Node {
@@ -11,15 +15,23 @@ public class BST <Key extends Comparable<Key>, Value> implements Tree<Key, Value
     private Node left;
     private Node right;
     private int N;
+    private boolean color;
 
-    public Node(Key key, Value val, int N) {
+    public Node(Key key, Value val, int N, boolean color) {
       this.key = key;
       this.val = val;
       this.N = N;
+      this.color = color;
     }
   }
 
-  @Override
+  public boolean isRed(Node x){
+    if (x == null) {
+      return false;
+    }
+    return x.color == RED;
+  }
+
   public int size() {
     return size(root);
   }
@@ -32,7 +44,6 @@ public class BST <Key extends Comparable<Key>, Value> implements Tree<Key, Value
     }
   }
 
-  @Override
   public Value get(Key key) {
     return get(root, key);
   }
@@ -49,14 +60,14 @@ public class BST <Key extends Comparable<Key>, Value> implements Tree<Key, Value
     }
   }
 
-  @Override
   public void put(Key key, Value val) {
     root = put(root, key, val);
+    root.color = BLACK;
   }
 
   private Node put (Node x, Key key, Value val) {
     if ( x == null ) {
-      return new Node(key, val, 1);
+      return new Node(key, val, 1, RED);
     } else if (key.compareTo(x.key) > 0) {
       x.right = put(x.right, key, val);
     } else if (key.compareTo(x.key) < 0 ) {
@@ -65,11 +76,20 @@ public class BST <Key extends Comparable<Key>, Value> implements Tree<Key, Value
       x.val = val;
     }
 
+    if (isRed(x.right) && !isRed(x.left)) {
+      x = rotateLeft(x);
+    }
+    if (isRed(x.left) && isRed(x.left.left)) {
+      x = rotateRight(x);
+    }
+    if(isRed(x.left) && isRed(x.right)) {
+      flipColors(x);
+    }
+
     x.N = size(x.left) + size(x.right) + 1;
     return x;
   }
 
-  @Override
   public Key min() {
     return min(root);
   }
@@ -82,7 +102,6 @@ public class BST <Key extends Comparable<Key>, Value> implements Tree<Key, Value
     }
   }
 
-  @Override
   public Key max() {
     return (max(root));
   }
@@ -95,7 +114,6 @@ public class BST <Key extends Comparable<Key>, Value> implements Tree<Key, Value
     }
   }
 
-  @Override
   public Key floor(Key key) {
     Node x = floor(root, key);
     if (x == null) {
@@ -121,7 +139,6 @@ public class BST <Key extends Comparable<Key>, Value> implements Tree<Key, Value
     }
   }
 
-  @Override
   public Key ceiling(Key key) {
     Node x = ceiling(root, key);
     if (x == null) {
@@ -147,7 +164,6 @@ public class BST <Key extends Comparable<Key>, Value> implements Tree<Key, Value
     }
   }
 
-  @Override
   public Iterable<Key>  keys() {
     return keys(min(), max());
   }
@@ -173,7 +189,6 @@ public class BST <Key extends Comparable<Key>, Value> implements Tree<Key, Value
     }
   }
 
-  @Override
   public int depth(){
     int i = 0;
     return depth(root, i);
@@ -183,11 +198,45 @@ public class BST <Key extends Comparable<Key>, Value> implements Tree<Key, Value
     if (x == null) return 0;
     else if (x.left == null && x.right == null) return i;
     else {
-      i++;
+      if (x.color == BLACK) {
+        i++;
+      }
       int leftDepth = depth(x.left, i);
       int rightDepth = depth(x.right, i);
       return leftDepth > rightDepth ? leftDepth : rightDepth;
     }
  }
 
+  private Node rotateLeft(Node h) {
+    Node x = h.right;
+
+    h.right = x.left;
+    x.left = h;
+    x.color = h.color;
+    h.color = RED;
+    x.N = h.N;
+    x.N = h.N;
+    h.N = 1 + size(h.left) + size(h.right);
+
+    return x;
+  }
+
+  private Node rotateRight(Node h) {
+    Node x = h.left;
+
+    h.left = x.right;
+    x.right = h;
+    x.color = h.color;
+    h.color = RED;
+    x.N = h.N;
+    h.N = 1 + size(h.left) + size(h.right);
+
+    return x;
+  }
+
+  private void flipColors(Node h) {
+    h.color = RED;
+    h.left.color = BLACK;
+    h.right.color = BLACK;
+  }
 }

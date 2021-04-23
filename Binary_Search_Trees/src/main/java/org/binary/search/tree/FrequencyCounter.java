@@ -9,7 +9,7 @@ public class FrequencyCounter {
     System.setIn(FrequencyCounter.class.getClassLoader().getResourceAsStream("tinyTale.txt"));
 
     int minlen = Integer.parseInt("0");
-    BST<String, Integer> st = new BST<>();
+    RedBlackBST<String, Integer> st = new RedBlackBST<>();
     while (!StdIn.isEmpty()) {
       String word = StdIn.readString();
       if (word.length() < minlen) {
@@ -28,6 +28,7 @@ public class FrequencyCounter {
         max = word;
       }
     }
-    StdOut.println(max + " " + st.get(max));
+    StdOut.println(max + "->" + st.get(max));
+    System.out.println("depth->" + st.depth());
   }
 }
