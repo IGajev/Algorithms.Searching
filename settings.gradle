@@ -1,4 +1,5 @@
 rootProject.name = 'Algorithms.Searching'
 include 'Symbol_Tables'
 include 'Binary_Search_Trees'
+include 'VMWare_Interview_Questions'
 
